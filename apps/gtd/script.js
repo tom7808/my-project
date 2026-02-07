@@ -84,11 +84,11 @@ function updateTabCounts() {
         const list = tab.dataset.list;
         const count = items.filter((i) => i.list === list && !i.done).length;
         const label = {
-            inbox: "Inbox",
-            next: "Next",
-            project: "Projects",
-            waiting: "Waiting",
-            someday: "Someday",
+            inbox: "📥 インボックス",
+            next: "⚡ 次のアクション",
+            project: "📁 プロジェクト",
+            waiting: "⏳ 待ち中",
+            someday: "💭 いつか",
         }[list];
         tab.textContent = count > 0 ? `${label} (${count})` : label;
     });
