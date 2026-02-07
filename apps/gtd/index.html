@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>GTD App</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="min-h-screen bg-gradient-to-br from-slate-900 via-indigo-900 to-slate-900 text-white">
+
+    <!-- Header -->
+    <header class="sticky top-0 z-30 bg-slate-900/80 backdrop-blur-lg border-b border-white/10 px-4 py-3">
+        <div class="max-w-lg mx-auto flex items-center justify-between">
+            <h1 class="text-lg font-bold tracking-wide">GTD</h1>
+            <button id="clear-done-btn" class="text-xs text-white/50 hover:text-white/80 transition-colors">Clear Done</button>
+        </div>
+    </header>
+
+    <main class="max-w-lg mx-auto px-4 pb-32">
+
+        <!-- Inbox Input -->
+        <div class="sticky top-[53px] z-20 bg-slate-900/80 backdrop-blur-lg py-3">
+            <form id="inbox-form" class="flex gap-2">
+                <input
+                    id="inbox-input"
+                    type="text"
+                    placeholder="何か気になること？"
+                    class="flex-1 bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-sm text-white placeholder-white/40 focus:outline-none focus:border-indigo-400 focus:ring-1 focus:ring-indigo-400 transition-colors"
+                >
+                <button type="submit" class="bg-indigo-500 hover:bg-indigo-600 active:scale-95 text-white text-sm font-semibold px-5 rounded-xl transition-all duration-150">
+                    追加
+                </button>
+            </form>
+        </div>
+
+        <!-- List Tabs -->
+        <nav id="tabs" class="flex gap-1 overflow-x-auto py-2 -mx-1 px-1 no-scrollbar">
+            <button class="tab-btn active" data-list="inbox">Inbox</button>
+            <button class="tab-btn" data-list="next">Next</button>
+            <button class="tab-btn" data-list="project">Projects</button>
+            <button class="tab-btn" data-list="waiting">Waiting</button>
+            <button class="tab-btn" data-list="someday">Someday</button>
+        </nav>
+
+        <!-- Items List -->
+        <ul id="items-list" class="mt-2 space-y-2"></ul>
+
+        <!-- Empty State -->
+        <div id="empty-state" class="hidden text-center text-white/30 text-sm mt-16">
+            <p>このリストは空です</p>
+        </div>
+    </main>
+
+    <!-- Move Modal -->
+    <div id="move-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+        <div class="bg-slate-800 border border-white/20 rounded-2xl w-full max-w-sm p-5 space-y-3">
+            <h2 class="text-sm font-bold text-white/70 mb-2">移動先を選択</h2>
+            <button class="move-option" data-target="inbox">📥 Inbox</button>
+            <button class="move-option" data-target="next">⚡ Next Actions</button>
+            <button class="move-option" data-target="project">📁 Projects</button>
+            <button class="move-option" data-target="waiting">⏳ Waiting For</button>
+            <button class="move-option" data-target="someday">💭 Someday/Maybe</button>
+            <button id="move-cancel" class="w-full text-center text-white/40 hover:text-white/70 text-sm py-2 transition-colors">キャンセル</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
