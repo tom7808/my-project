@@ -1,3 +1,7 @@
+button {
+    touch-action: manipulation;
+}
+
 .counter-value {
     transition: transform 0.1s ease;
 }
