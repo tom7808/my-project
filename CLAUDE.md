@@ -12,11 +12,10 @@ This file provides guidance for AI assistants working on this repository.
 
 ```
 my-project/
+├── index.html         # Top page (Hello World)
 ├── README.md          # Project description
 └── CLAUDE.md          # This file — AI assistant guide
 ```
-
-The project is in its initial state. No source code, build tooling, or configuration has been added yet.
 
 ## Development Setup
 
