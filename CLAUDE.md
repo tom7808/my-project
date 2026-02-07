@@ -13,6 +13,11 @@ This file provides guidance for AI assistants working on this repository.
 ```
 my-project/
 ├── index.html         # Top page (Hello World)
+├── apps/
+│   └── counter/       # Counter app (Tailwind CSS)
+│       ├── index.html
+│       ├── style.css
+│       └── script.js
 ├── README.md          # Project description
 └── CLAUDE.md          # This file — AI assistant guide
 ```
