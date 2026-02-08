@@ -196,3 +196,18 @@ clearDoneBtn.addEventListener("click", clearDone);
 
 // --- Init ---
 render();
+
+// Display last update time
+function updateLastUpdateTime() {
+    const lastUpdate = new Date(document.lastModified);
+    const month = String(lastUpdate.getMonth() + 1).padStart(2, '0');
+    const date = String(lastUpdate.getDate()).padStart(2, '0');
+    const hours = String(lastUpdate.getHours()).padStart(2, '0');
+    const minutes = String(lastUpdate.getMinutes()).padStart(2, '0');
+    const updateText = `${lastUpdate.getFullYear()}/${month}/${date} ${hours}:${minutes}`;
+    const lastUpdateEl = document.getElementById('last-update');
+    if (lastUpdateEl) {
+        lastUpdateEl.textContent = updateText;
+    }
+}
+updateLastUpdateTime();

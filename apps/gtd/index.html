@@ -18,7 +18,10 @@
             <div class="flex items-center justify-between mb-1">
                 <div class="flex items-center gap-3">
                     <div class="w-10 h-10 bg-gradient-to-br from-purple-400 to-violet-600 rounded-xl flex items-center justify-center text-xl font-bold">✓</div>
-                    <h1 class="text-2xl font-bold bg-gradient-to-r from-purple-100 to-violet-100 bg-clip-text text-transparent">GTD タスク管理</h1>
+                    <div>
+                        <h1 class="text-2xl font-bold bg-gradient-to-r from-purple-100 to-violet-100 bg-clip-text text-transparent">GTD タスク管理</h1>
+                        <p class="text-xs text-white/40 mt-0.5">更新: <span id="last-update">読み込み中...</span></p>
+                    </div>
                 </div>
                 <button id="clear-done-btn" class="text-sm font-medium text-white/70 hover:text-white/95 transition-all duration-200 px-4 py-2 rounded-lg hover:bg-purple-500/20">完了を削除</button>
             </div>
@@ -29,14 +32,14 @@
 
         <!-- Inbox Input -->
         <div class="sticky top-[76px] z-20 bg-gradient-to-b from-slate-950/98 via-slate-950/90 to-slate-950/75 backdrop-blur-xl py-5 -mx-4 px-4">
-            <form id="inbox-form" class="max-w-4xl mx-auto flex gap-3">
+            <form id="inbox-form" class="flex gap-3">
                 <input
                     id="inbox-input"
                     type="text"
                     placeholder="気になることを入力..."
-                    class="flex-1 bg-white/10 border border-purple-400/35 rounded-xl px-5 py-4 text-base font-medium text-white placeholder-white/45 focus:outline-none focus:border-purple-300 focus:ring-2 focus:ring-purple-400/40 transition-all duration-200 focus:bg-white/15"
+                    class="flex-1 bg-white/10 border border-purple-400/35 rounded-xl px-5 py-3.5 text-base font-medium text-white placeholder-white/45 focus:outline-none focus:border-purple-300 focus:ring-2 focus:ring-purple-400/40 transition-all duration-200 focus:bg-white/15"
                 >
-                <button type="submit" class="bg-gradient-to-r from-purple-500 to-violet-600 hover:from-purple-600 hover:to-violet-700 active:scale-95 text-white font-bold px-8 py-4 rounded-xl transition-all duration-200 shadow-lg hover:shadow-2xl hover:shadow-purple-500/40 text-base whitespace-nowrap">
+                <button type="submit" class="bg-gradient-to-r from-purple-500 to-violet-600 hover:from-purple-600 hover:to-violet-700 active:scale-95 text-white font-bold px-6 py-3.5 rounded-xl transition-all duration-200 shadow-lg hover:shadow-2xl hover:shadow-purple-500/40 text-base">
                     追加
                 </button>
             </form>
