@@ -1,0 +1,486 @@
+/* Prevent zoom on interactions */
+button {
+    touch-action: manipulation;
+}
+
+input, textarea, select {
+    touch-action: manipulation;
+}
+
+/* Hide scrollbars */
+.no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+/* Animations */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes checkBounce {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.25s ease;
+}
+
+.item-enter {
+    animation: slideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.item-delete {
+    animation: slideInLeft 0.3s ease reverse;
+}
+
+/* Tab Styling */
+.tab-btn {
+    flex-shrink: 0;
+    padding: 0.625rem 1.25rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    border-radius: 9999px;
+    color: rgba(255, 255, 255, 0.65);
+    background: rgba(255, 255, 255, 0.06);
+    border: 1.5px solid rgba(255, 255, 255, 0.12);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.tab-btn:hover {
+    color: rgba(255, 255, 255, 0.95);
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-1px);
+}
+
+.tab-btn.active {
+    color: #fff;
+    background: linear-gradient(135deg, rgba(168, 85, 247, 0.9) 0%, rgba(139, 92, 246, 0.9) 100%);
+    border-color: rgba(168, 85, 247, 1);
+    box-shadow: 0 0 20px rgba(168, 85, 247, 0.5), 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Filter Button Styling */
+.filter-btn {
+    flex-shrink: 0;
+    padding: 0.5rem 1rem;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    border-radius: 0.75rem;
+    color: rgba(255, 255, 255, 0.55);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1.5px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.filter-btn:hover {
+    color: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(168, 85, 247, 0.3);
+    transform: translateY(-1px);
+}
+
+.filter-btn.active {
+    color: #fff;
+    background: rgba(168, 85, 247, 0.2);
+    border-color: rgba(168, 85, 247, 0.5);
+}
+
+/* Task Card Styling */
+.task-card {
+    background: rgba(255, 255, 255, 0.07);
+    border: 1.5px solid rgba(255, 255, 255, 0.12);
+    border-radius: 1.125rem;
+    padding: 1.125rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(12px);
+    animation: slideIn 0.3s ease;
+}
+
+.task-card:hover {
+    background: rgba(255, 255, 255, 0.11);
+    border-color: rgba(168, 85, 247, 0.4);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4), 0 0 1px rgba(168, 85, 247, 0.5);
+    transform: translateY(-2px);
+}
+
+.task-card.done {
+    opacity: 0.45;
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.task-card.done .task-title {
+    text-decoration: line-through;
+    color: rgba(255, 255, 255, 0.35);
+}
+
+/* Task Checkbox */
+.task-checkbox {
+    flex-shrink: 0;
+    width: 1.625rem;
+    height: 1.625rem;
+    border-radius: 0.5rem;
+    border: 2px solid rgba(255, 255, 255, 0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    background: rgba(255, 255, 255, 0.04);
+    margin-top: 0.25rem;
+}
+
+.task-checkbox:hover {
+    border-color: rgba(168, 85, 247, 0.8);
+    background: rgba(168, 85, 247, 0.15);
+    box-shadow: 0 0 12px rgba(168, 85, 247, 0.3);
+}
+
+.task-checkbox.checked {
+    background: linear-gradient(135deg, rgba(168, 85, 247, 1) 0%, rgba(139, 92, 246, 1) 100%);
+    border-color: #a855f7;
+    box-shadow: 0 0 12px rgba(168, 85, 247, 0.6);
+    animation: checkBounce 0.4s ease;
+}
+
+.task-checkbox.checked::after {
+    content: "✓";
+    color: #fff;
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+/* Task Content */
+.task-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.task-title {
+    font-size: 1rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.96);
+    letter-spacing: 0.3px;
+    word-break: break-word;
+    margin-bottom: 0.25rem;
+}
+
+.task-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    margin-top: 0.5rem;
+}
+
+.task-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.375rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    font-size: 0.7rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.task-context-work {
+    background: rgba(59, 130, 246, 0.2);
+    border-color: rgba(59, 130, 246, 0.4);
+    color: #93c5fd;
+}
+
+.task-context-home {
+    background: rgba(34, 197, 94, 0.2);
+    border-color: rgba(34, 197, 94, 0.4);
+    color: #86efac;
+}
+
+.task-context-phone {
+    background: rgba(245, 158, 11, 0.2);
+    border-color: rgba(245, 158, 11, 0.4);
+    color: #fcd34d;
+}
+
+.task-context-computer {
+    background: rgba(168, 85, 247, 0.2);
+    border-color: rgba(168, 85, 247, 0.4);
+    color: #d8b4fe;
+}
+
+.task-priority {
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.375rem;
+    font-weight: 700;
+    font-size: 0.7rem;
+}
+
+.task-priority-high {
+    background: rgba(239, 68, 68, 0.2);
+    border: 1px solid rgba(239, 68, 68, 0.4);
+    color: #fca5a5;
+}
+
+.task-priority-medium {
+    background: rgba(245, 158, 11, 0.2);
+    border: 1px solid rgba(245, 158, 11, 0.4);
+    color: #fcd34d;
+}
+
+.task-priority-low {
+    background: rgba(148, 163, 184, 0.2);
+    border: 1px solid rgba(148, 163, 184, 0.4);
+    color: #cbd5e1;
+}
+
+.task-due-date {
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 500;
+}
+
+/* Task Actions */
+.task-actions {
+    flex-shrink: 0;
+    display: flex;
+    gap: 0.5rem;
+    opacity: 0.5;
+    transition: opacity 0.2s;
+}
+
+.task-card:hover .task-actions {
+    opacity: 1;
+}
+
+.task-btn {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.75rem;
+    border-radius: 0.5rem;
+    color: rgba(255, 255, 255, 0.65);
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.task-btn:hover {
+    color: rgba(255, 255, 255, 0.95);
+    background: rgba(168, 85, 247, 0.2);
+    border-color: rgba(168, 85, 247, 0.4);
+    transform: translateY(-1px);
+}
+
+.task-btn.delete:hover {
+    color: #fca5a5;
+    background: rgba(248, 113, 113, 0.15);
+    border-color: rgba(248, 113, 113, 0.35);
+}
+
+/* Move Options */
+.move-option {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 1rem 1.25rem;
+    font-size: 0.9375rem;
+    border-radius: 0.875rem;
+    color: rgba(255, 255, 255, 0.85);
+    background: rgba(255, 255, 255, 0.07);
+    border: 1.5px solid rgba(255, 255, 255, 0.12);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    font-weight: 600;
+    animation: slideIn 0.2s ease;
+}
+
+.move-option:hover {
+    background: rgba(168, 85, 247, 0.25);
+    border-color: rgba(168, 85, 247, 0.5);
+    color: #fff;
+    transform: translateX(4px);
+    box-shadow: 0 0 16px rgba(168, 85, 247, 0.3);
+}
+
+/* Breakdown Items in Review */
+.breakdown-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.breakdown-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex: 1;
+}
+
+.breakdown-progress {
+    flex: 1;
+    height: 0.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 9999px;
+    overflow: hidden;
+}
+
+.breakdown-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, rgba(168, 85, 247, 0.8), rgba(139, 92, 246, 0.8));
+    transition: width 0.3s ease;
+}
+
+/* Light Mode Styles */
+body.light-mode {
+    @apply bg-gradient-to-br from-slate-50 via-purple-50 to-slate-50 text-slate-900;
+}
+
+body.light-mode header {
+    @apply bg-gradient-to-b from-slate-50/95 via-slate-50/90 to-slate-50/80 border-purple-500/10;
+}
+
+body.light-mode .sticky {
+    @apply bg-gradient-to-b from-slate-50/95 via-slate-50/85 to-slate-50/70;
+}
+
+body.light-mode .tab-btn {
+    color: rgba(15, 23, 42, 0.65);
+    border-color: rgba(15, 23, 42, 0.12);
+    background: rgba(15, 23, 42, 0.06);
+}
+
+body.light-mode .tab-btn:hover {
+    color: rgba(15, 23, 42, 0.95);
+    border-color: rgba(15, 23, 42, 0.2);
+    background: rgba(15, 23, 42, 0.1);
+}
+
+body.light-mode .filter-btn {
+    color: rgba(15, 23, 42, 0.55);
+    border-color: rgba(15, 23, 42, 0.1);
+    background: rgba(15, 23, 42, 0.05);
+}
+
+body.light-mode .filter-btn:hover {
+    color: rgba(15, 23, 42, 0.9);
+    border-color: rgba(168, 85, 247, 0.3);
+    background: rgba(15, 23, 42, 0.08);
+}
+
+body.light-mode .task-card {
+    background: rgba(15, 23, 42, 0.08);
+    border-color: rgba(15, 23, 42, 0.12);
+    color: rgb(15, 23, 42);
+}
+
+body.light-mode .task-card:hover {
+    background: rgba(15, 23, 42, 0.12);
+    border-color: rgba(168, 85, 247, 0.4);
+}
+
+body.light-mode .task-title {
+    color: rgb(15, 23, 42);
+}
+
+body.light-mode .task-btn {
+    color: rgba(15, 23, 42, 0.65);
+    background: rgba(15, 23, 42, 0.08);
+    border-color: rgba(15, 23, 42, 0.12);
+}
+
+body.light-mode .task-btn:hover {
+    color: rgba(15, 23, 42, 0.95);
+    background: rgba(168, 85, 247, 0.15);
+    border-color: rgba(168, 85, 247, 0.4);
+}
+
+body.light-mode input,
+body.light-mode textarea,
+body.light-mode select {
+    @apply bg-slate-100 border-slate-300 text-slate-900;
+    color: rgb(15, 23, 42);
+}
+
+body.light-mode input:focus,
+body.light-mode textarea:focus,
+body.light-mode select:focus {
+    @apply border-purple-400 bg-white;
+}
+
+body.light-mode .bg-white\/8 {
+    @apply bg-slate-100;
+}
+
+body.light-mode .bg-gradient-to-b {
+    @apply bg-gradient-to-b from-slate-50/95;
+}
+
+body.light-mode h1,
+body.light-mode h2,
+body.light-mode h3 {
+    @apply text-slate-900;
+}
+
+body.light-mode .text-white\/80 {
+    @apply text-slate-700;
+}
+
+body.light-mode .text-white\/60 {
+    @apply text-slate-600;
+}
+
+body.light-mode .text-white\/30 {
+    @apply text-slate-400;
+}
