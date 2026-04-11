@@ -1,44 +1,198 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>my-project</title>
+    <title>my-project | ホーム</title>
+    <style>
+        :root {
+            --bg: #f6f8fc;
+            --card: #ffffff;
+            --text: #1f2937;
+            --muted: #6b7280;
+            --line: #e5e7eb;
+            --primary: #4f46e5;
+            --primary-dark: #4338ca;
+            --accent: #eef2ff;
+            --radius: 16px;
+            --shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Inter", "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Noto Sans JP", sans-serif;
+            color: var(--text);
+            background:
+                radial-gradient(circle at 10% 10%, #e0e7ff 0%, transparent 40%),
+                radial-gradient(circle at 90% 0%, #dbeafe 0%, transparent 35%),
+                var(--bg);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: min(1080px, 92%);
+            margin: 0 auto;
+            padding: 40px 0 64px;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #1e1b4b 0%, #312e81 45%, #4f46e5 100%);
+            color: #fff;
+            border-radius: 22px;
+            padding: clamp(24px, 5vw, 56px);
+            box-shadow: var(--shadow);
+            margin-bottom: 32px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.16);
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            border-radius: 999px;
+            padding: 6px 12px;
+            font-size: 0.88rem;
+            margin-bottom: 14px;
+        }
+
+        .hero h1 {
+            margin: 0;
+            font-size: clamp(1.8rem, 4vw, 3rem);
+            line-height: 1.2;
+        }
+
+        .hero p {
+            margin: 14px 0 0;
+            max-width: 60ch;
+            color: rgba(255, 255, 255, 0.88);
+        }
+
+        .section-title {
+            margin: 0 0 14px;
+            font-size: clamp(1.2rem, 2vw, 1.6rem);
+        }
+
+        .section-description {
+            margin: 0 0 20px;
+            color: var(--muted);
+        }
+
+        .apps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 16px;
+        }
+
+        .app-card {
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            padding: 18px;
+            box-shadow: 0 4px 16px rgba(15, 23, 42, 0.05);
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .app-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(15, 23, 42, 0.1);
+        }
+
+        .app-card h3 {
+            margin: 0;
+            font-size: 1.1rem;
+        }
+
+        .app-card p {
+            margin: 10px 0 16px;
+            color: var(--muted);
+            flex: 1;
+            font-size: 0.94rem;
+        }
+
+        .app-link {
+            align-self: flex-start;
+            text-decoration: none;
+            color: #fff;
+            background: var(--primary);
+            border-radius: 10px;
+            padding: 9px 14px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .app-link:hover {
+            background: var(--primary-dark);
+        }
+
+        .footer-note {
+            margin-top: 20px;
+            font-size: 0.85rem;
+            color: var(--muted);
+            text-align: right;
+        }
+
+        @media (max-width: 520px) {
+            .container {
+                padding-top: 24px;
+            }
+
+            .hero {
+                border-radius: 18px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1>Hello World</h1>
+    <main class="container">
+        <section class="hero">
+            <span class="hero-badge">🚀 My Project Dashboard</span>
+            <h1>ようこそ、my-project へ</h1>
+            <p>
+                日々の生産性向上と学習を支えるミニアプリを、ひとつのホーム画面からすぐに起動できます。
+                タスク管理、メモ、検証用アプリなどを直感的に切り替えて利用してください。
+            </p>
+        </section>
 
-    <h2>Apps</h2>
-    <table border="1" cellpadding="8" cellspacing="0">
-        <thead>
-            <tr>
-                <th>App</th>
-                <th>Description</th>
-                <th>Link</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Counter</td>
-                <td>シンプルなカウンターアプリ (Tailwind CSS)</td>
-                <td><a href="apps/counter/">Open</a></td>
-            </tr>
-            <tr>
-                <td>GTD</td>
-                <td>原典版GTDタスク管理アプリ (Tailwind CSS)</td>
-                <td><a href="apps/gtd/">Open</a></td>
-            </tr>
-            <tr>
-                <td>GTD Pro</td>
-                <td>モダンなGTDタスク管理アプリ (Tailwind CSS, 詳細機能)</td>
-                <td><a href="apps/gtdpro/">Open</a></td>
-            </tr>
-            <tr>
-                <td>Blog</td>
-                <td>HTMLのみで作成したミニマルなブログミニアプリ</td>
-                <td><a href="apps/blog/">Open</a></td>
-            </tr>
-        </tbody>
-    </table>
+        <section aria-labelledby="apps-heading">
+            <h2 id="apps-heading" class="section-title">Apps</h2>
+            <p class="section-description">目的に合わせて使えるアプリ一覧です。必要なものを選んですぐ開始できます。</p>
+
+            <div class="apps-grid">
+                <article class="app-card">
+                    <h3>Counter</h3>
+                    <p>シンプルで軽量なカウンターアプリ。Tailwind CSS を使った UI を確認できます。</p>
+                    <a class="app-link" href="apps/counter/">Open</a>
+                </article>
+
+                <article class="app-card">
+                    <h3>GTD</h3>
+                    <p>原典版 GTD ワークフローに沿ったタスク管理を試せるスタンダード版アプリです。</p>
+                    <a class="app-link" href="apps/gtd/">Open</a>
+                </article>
+
+                <article class="app-card">
+                    <h3>GTD Pro</h3>
+                    <p>詳細機能を追加したモダンな GTD 版。実運用を想定した高機能 UI を備えています。</p>
+                    <a class="app-link" href="apps/gtdpro/">Open</a>
+                </article>
+
+                <article class="app-card">
+                    <h3>Blog</h3>
+                    <p>HTML のみで構築したミニマルブログ。シンプルな構造と表示確認に適しています。</p>
+                    <a class="app-link" href="apps/blog/">Open</a>
+                </article>
+            </div>
+        </section>
+
+        <p class="footer-note">Designed for a clear first impression.</p>
+    </main>
 </body>
 </html>
