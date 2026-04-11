@@ -4,39 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Counter App</title>
-    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center p-4">
-    <div class="w-full max-w-sm mx-auto text-center">
-        <h1 class="text-2xl font-bold text-white mb-8 tracking-wide">Counter</h1>
+<body>
+    <main class="counter-wrap">
+        <section class="counter-card" aria-label="Counter app">
+            <h1 class="counter-title">Counter</h1>
+            <p id="count" class="counter-value" aria-live="polite">0</p>
 
-        <div class="bg-white/10 backdrop-blur-lg rounded-3xl p-8 shadow-2xl border border-white/20">
-            <div id="count" class="text-8xl font-extrabold text-white tabular-nums py-6 counter-value">0</div>
-
-            <div class="flex gap-4 mt-8">
-                <button
-                    id="decrement"
-                    class="flex-1 bg-rose-500 hover:bg-rose-600 active:scale-95 text-white text-3xl font-bold py-4 rounded-2xl transition-all duration-150 shadow-lg shadow-rose-500/30"
-                >
-                    −
-                </button>
-                <button
-                    id="increment"
-                    class="flex-1 bg-emerald-500 hover:bg-emerald-600 active:scale-95 text-white text-3xl font-bold py-4 rounded-2xl transition-all duration-150 shadow-lg shadow-emerald-500/30"
-                >
-                    +
-                </button>
+            <div class="counter-actions">
+                <button id="decrement" class="btn" aria-label="decrement">−</button>
+                <button id="increment" class="btn btn-primary" aria-label="increment">+</button>
             </div>
 
-            <button
-                id="reset"
-                class="mt-4 w-full bg-white/10 hover:bg-white/20 active:scale-95 text-white/70 hover:text-white text-sm font-medium py-3 rounded-2xl transition-all duration-150"
-            >
-                Reset
-            </button>
-        </div>
-    </div>
+            <button id="reset" class="btn btn-reset">Reset</button>
+        </section>
+    </main>
 
     <script src="script.js"></script>
 </body>
