@@ -1,11 +1,97 @@
-button {
-    touch-action: manipulation;
+:root {
+    --bg: #f8fafc;
+    --card: #ffffff;
+    --text: #0f172a;
+    --muted: #475569;
+    --line: #e2e8f0;
+    --accent: #2563eb;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Inter", "Noto Sans JP", "Hiragino Sans", "Yu Gothic", sans-serif;
+}
+
+.counter-wrap {
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    padding: 16px;
+}
+
+.counter-card {
+    width: min(92vw, 360px);
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 24px;
+}
+
+.counter-title {
+    margin: 0 0 12px;
+    font-size: 14px;
+    line-height: 1.4;
+    color: var(--muted);
+    font-weight: 600;
 }
 
 .counter-value {
-    transition: transform 0.1s ease;
+    margin: 0 0 20px;
+    text-align: center;
+    font-size: clamp(48px, 12vw, 56px);
+    line-height: 1.1;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.02em;
+    transition: transform 100ms ease;
 }
 
 .counter-value.bump {
-    transform: scale(1.15);
+    transform: scale(1.08);
+}
+
+.counter-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.btn {
+    touch-action: manipulation;
+    height: 40px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: #ffffff;
+    color: var(--text);
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 140ms ease, transform 80ms ease;
+}
+
+.btn:hover {
+    background: #f1f5f9;
+}
+
+.btn:active {
+    transform: translateY(1px);
+}
+
+.btn-primary {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+.btn-reset {
+    margin-top: 10px;
+    width: 100%;
+    font-size: 14px;
+    color: var(--muted);
 }
