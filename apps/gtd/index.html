@@ -4,70 +4,49 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>GTD - タスク管理</title>
-    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
-<body style="font-family: 'Noto Sans JP', sans-serif;" class="min-h-screen bg-gradient-to-br from-slate-950 via-purple-950 to-slate-950 text-white">
+<body>
+    <div class="gtd-wrap">
+        <main class="gtd-card">
+            <header class="gtd-header">
+                <h1 class="gtd-title">GTD タスク管理</h1>
+                <button id="clear-done-btn" class="btn btn-quiet">完了を削除</button>
+            </header>
 
-    <!-- Header -->
-    <header class="sticky top-0 z-30 bg-gradient-to-b from-slate-950/95 via-slate-950/90 to-slate-950/80 backdrop-blur-xl border-b border-purple-500/20 px-4 py-4">
-        <div class="max-w-2xl mx-auto flex items-center justify-between">
-            <div class="flex items-center gap-3">
-                <div class="w-8 h-8 bg-gradient-to-br from-purple-400 to-violet-600 rounded-lg flex items-center justify-center text-lg font-bold">✓</div>
-                <h1 class="text-xl font-bold bg-gradient-to-r from-purple-200 to-violet-200 bg-clip-text text-transparent">GTD タスク管理</h1>
-            </div>
-            <button id="clear-done-btn" class="text-sm text-white/60 hover:text-white/90 transition-all duration-200 px-3 py-1.5 rounded-lg hover:bg-white/5">完了を削除</button>
-        </div>
-    </header>
-
-    <main class="max-w-2xl mx-auto px-4 pb-32">
-
-        <!-- Inbox Input -->
-        <div class="sticky top-[73px] z-20 bg-gradient-to-b from-slate-950/95 via-slate-950/85 to-slate-950/70 backdrop-blur-xl py-4">
-            <form id="inbox-form" class="flex gap-2.5">
-                <input
-                    id="inbox-input"
-                    type="text"
-                    placeholder="気になることを入力..."
-                    class="flex-1 bg-white/8 border border-purple-500/30 rounded-xl px-5 py-3.5 text-base text-white placeholder-white/40 focus:outline-none focus:border-purple-400 focus:ring-2 focus:ring-purple-400/30 transition-all duration-200 focus:bg-white/12"
-                >
-                <button type="submit" class="bg-gradient-to-r from-purple-500 to-violet-600 hover:from-purple-600 hover:to-violet-700 active:scale-95 text-white font-semibold px-6 py-3.5 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl hover:shadow-purple-500/30">
-                    追加
-                </button>
+            <form id="inbox-form" class="gtd-form">
+                <input id="inbox-input" type="text" placeholder="気になることを入力...">
+                <button type="submit" class="btn btn-primary">追加</button>
             </form>
-        </div>
 
-        <!-- List Tabs -->
-        <nav id="tabs" class="flex gap-2.5 overflow-x-auto py-4 -mx-1 px-1 no-scrollbar">
-            <button class="tab-btn active" data-list="inbox">📥 インボックス</button>
-            <button class="tab-btn" data-list="next">⚡ 次のアクション</button>
-            <button class="tab-btn" data-list="project">📁 プロジェクト</button>
-            <button class="tab-btn" data-list="waiting">⏳ 待ち中</button>
-            <button class="tab-btn" data-list="someday">💭 いつか</button>
-        </nav>
+            <nav id="tabs" class="tab-list no-scrollbar">
+                <button class="tab-btn active" data-list="inbox">📥 インボックス</button>
+                <button class="tab-btn" data-list="next">⚡ 次のアクション</button>
+                <button class="tab-btn" data-list="project">📁 プロジェクト</button>
+                <button class="tab-btn" data-list="waiting">⏳ 待ち中</button>
+                <button class="tab-btn" data-list="someday">💭 いつか</button>
+            </nav>
 
-        <!-- Items List -->
-        <ul id="items-list" class="mt-2 space-y-2"></ul>
+            <ul id="items-list" class="items-list"></ul>
 
-        <!-- Empty State -->
-        <div id="empty-state" class="hidden text-center text-white/30 text-sm mt-16">
-            <p>このリストは空です</p>
-        </div>
-    </main>
+            <div id="empty-state" class="empty-state hidden">
+                <p>このリストは空です</p>
+            </div>
+        </main>
+    </div>
 
-    <!-- Move Modal -->
-    <div id="move-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/70 backdrop-blur-md p-4 animate-fade-in">
-        <div class="bg-gradient-to-b from-slate-800 to-slate-900 border border-purple-500/30 rounded-2xl w-full max-w-sm p-6 space-y-3 shadow-2xl">
-            <h2 class="text-lg font-bold text-white mb-4">移動先を選択</h2>
+    <div id="move-modal" class="modal hidden">
+        <div class="modal-card">
+            <h2>移動先を選択</h2>
             <button class="move-option" data-target="inbox">📥 インボックス</button>
             <button class="move-option" data-target="next">⚡ 次のアクション</button>
             <button class="move-option" data-target="project">📁 プロジェクト</button>
             <button class="move-option" data-target="waiting">⏳ 待ち中</button>
             <button class="move-option" data-target="someday">💭 いつか</button>
-            <button id="move-cancel" class="w-full text-center text-white/50 hover:text-white/80 text-sm py-3 transition-colors rounded-lg hover:bg-white/5">キャンセル</button>
+            <button id="move-cancel" class="btn btn-quiet btn-block">キャンセル</button>
         </div>
     </div>
 
