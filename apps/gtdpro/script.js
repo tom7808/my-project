@@ -81,7 +81,7 @@ let currentContext = null;
 let editingTaskId = null;
 let moveTargetId = null;
 let deleteTargetId = null;
-let darkMode = true;
+let darkMode = false;
 
 // ============================================================================
 // STORAGE FUNCTIONS
@@ -108,9 +108,9 @@ function saveItems() {
 function loadTheme() {
     try {
         const stored = localStorage.getItem(THEME_KEY);
-        return stored === "light" ? false : true;
+        return stored === "dark";
     } catch {
-        return true;
+        return false;
     }
 }
 
