@@ -2,11 +2,12 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>断食日時計</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   :root {
+    --app-height: 100dvh;
     --bg: #000;
     --text: #fff;
     --clock: #fff;
@@ -110,13 +111,14 @@
     --arc-track-alpha: 0.22;
   }
   html {
+    width: 100%;
     min-height: 100%;
     background: var(--bg);
     overflow: hidden;
     transition: background 900ms ease;
   }
   body {
-    --app-height: 100dvh;
+    width: 100%;
     background: var(--bg);
     display: flex;
     flex-direction: column;
@@ -951,8 +953,8 @@ function preventUserZoom() {
 
 function updateAppHeight() {
   const viewport = window.visualViewport;
-  const height = viewport ? viewport.height + viewport.offsetTop : window.innerHeight;
-  document.body.style.setProperty('--app-height', `${Math.ceil(height)}px`);
+  const height = viewport ? viewport.height : window.innerHeight;
+  document.documentElement.style.setProperty('--app-height', `${Math.ceil(height)}px`);
 }
 
 function scheduleViewportSizingRefresh() {
