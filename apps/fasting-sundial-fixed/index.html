@@ -106,13 +106,18 @@
     --dot: #fff9f4;
     --arc-track-alpha: 0.22;
   }
+  html {
+    height: 100%;
+  }
   body {
+    --app-height: 100dvh;
     background: var(--bg);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 100vh;
+    min-height: var(--app-height);
+    height: var(--app-height);
     padding: 36px 18px;
     font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", sans-serif;
     overflow: hidden;
@@ -255,7 +260,8 @@
       flex-direction: row;
       justify-content: center;
       gap: 28px;
-      min-height: 100svh;
+      min-height: var(--app-height);
+      height: var(--app-height);
       padding: 16px 18px;
     }
     .wrap {
@@ -913,6 +919,31 @@ function preventUserZoom() {
   document.addEventListener('dblclick', event => event.preventDefault(), { passive: false });
 }
 
+function updateAppHeight() {
+  const viewport = window.visualViewport;
+  const height = viewport ? viewport.height : window.innerHeight;
+  document.body.style.setProperty('--app-height', `${height}px`);
+}
+
+function scheduleViewportSizingRefresh() {
+  updateAppHeight();
+  requestAnimationFrame(updateAppHeight);
+  setTimeout(updateAppHeight, 100);
+  setTimeout(updateAppHeight, 300);
+}
+
+function setupViewportSizing() {
+  scheduleViewportSizingRefresh();
+  window.addEventListener('load', scheduleViewportSizingRefresh);
+  window.addEventListener('resize', updateAppHeight);
+  window.addEventListener('orientationchange', scheduleViewportSizingRefresh);
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener('resize', updateAppHeight);
+    window.visualViewport.addEventListener('scroll', updateAppHeight);
+  }
+}
+
+setupViewportSizing();
 buildCitySelect();
 buildEatingStartSelect();
 loadPrefs();
