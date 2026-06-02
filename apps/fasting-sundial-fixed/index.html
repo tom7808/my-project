@@ -1,0 +1,319 @@
+<!DOCTYPE html><html lang="ja"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>断食日時計</title><style>*{margin:0;padding:0;box-sizing:border-box}:root{--bg:#000;--text:#fff;--clock:#fff;--secondary:rgba(255,255,255,0.52);--tertiary:rgba(255,255,255,0.34);--label:rgba(255,255,255,0.42);--glass-bg:rgba(255,255,255,0.070);--glass-highlight:rgba(255,255,255,0.18);--glass-border:rgba(255,255,255,0.13);--glass-shadow:0 18px 54px rgba(0,0,0,0.42);--select-bg:rgba(255,255,255,0.105);--select-border:rgba(255,255,255,0.14);--select-text:rgba(255,255,255,0.88);--option-bg:#111;--fasting:#bf5af2;--fasting-end:#ff375f;--eating:#40c8b8;--eating-end:#64d2ff;--sun:#ffd60a;--sun-end:#ff9f0a;--moon:#0a84ff;--moon-end:#5e5ce6;--ring:rgba(142,142,147,0.34);--dot:#fff;--fasting-soft:rgba(191,90,242,0.22);--eating-soft:rgba(64,200,184,0.18);--arc-track-alpha:0.20}body.light{--bg:#f5f5f7;--text:#1d1d1f;--clock:#111114;--secondary:rgba(29,29,31,0.54);--tertiary:rgba(29,29,31,0.48);--label:rgba(29,29,31,0.54);--glass-bg:rgba(255,255,255,0.64);--glass-highlight:rgba(255,255,255,0.86);--glass-border:rgba(60,60,67,0.14);--glass-shadow:0 18px 50px rgba(0,0,0,0.12);--select-bg:rgba(255,255,255,0.54);--select-border:rgba(60,60,67,0.13);--select-text:rgba(29,29,31,0.88);--option-bg:#fff;--fasting:#5856d6;--fasting-end:#c2185b;--eating:#008c7a;--eating-end:#00b8a9;--sun:#ffb000;--sun-end:#ffcc33;--moon:#007aff;--moon-end:#5856d6;--ring:rgba(60,60,67,0.30);--dot:#1d1d1f;--fasting-soft:rgba(88,86,214,0.16);--eating-soft:rgba(0,140,122,0.14);--arc-track-alpha:0.14}body{background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:36px 18px;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Helvetica Neue",sans-serif;overflow:hidden;user-select:none;touch-action:manipulation;color:var(--text);-webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums}.wrap{position:relative;width:320px;height:320px;margin-top:4px}canvas{position:absolute;top:0;left:0}.sun{position:absolute;top:-30px;left:50%;transform:translateX(-50%);font-size:22px}.moon{position:absolute;bottom:-30px;left:50%;transform:translateX(-50%);font-size:20px}.info{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;pointer-events:none}.clock{color:var(--clock);font-size:56px;font-weight:200;letter-spacing:0;line-height:0.95;white-space:nowrap}.clock sup{font-size:16px;font-weight:400;color:var(--secondary);vertical-align:super;margin-left:3px}.status{margin-top:12px;font-size:14px;font-weight:600;letter-spacing:0.18em}.date{margin-top:10px;font-size:11px;font-weight:500;color:var(--tertiary);letter-spacing:0.08em}.status.hidden{display:none}.fasting{color:var(--fasting)}.eating{color:var(--eating)}.sun-times{margin-top:18px;font-size:11px;font-weight:500;color:var(--tertiary);letter-spacing:0.12em;text-align:center}.controls{margin-top:36px;display:flex;gap:8px;align-items:center;justify-content:center;padding:10px;max-width:100%;border:1px solid var(--glass-border);border-radius:20px;background:var(--glass-bg);box-shadow:inset 0 1px 0 var(--glass-highlight),var(--glass-shadow);backdrop-filter:blur(26px) saturate(180%);-webkit-backdrop-filter:blur(26px) saturate(180%)}.ctrl-group{display:flex;flex-direction:column;align-items:center;gap:6px;min-width:64px}.ctrl-group label{font-size:10px;font-weight:600;color:var(--label);letter-spacing:0.08em}select{min-height:30px;background:var(--select-bg);border:1px solid var(--select-border);color:var(--select-text);font:inherit;font-size:13px;font-weight:500;padding:5px 10px;border-radius:10px;outline:none;cursor:pointer;-webkit-appearance:none;appearance:none;text-align:center;box-shadow:inset 0 1px 0 var(--glass-highlight);transition:background 160ms ease,border-color 160ms ease,transform 160ms ease}select:focus-visible{border-color:var(--moon)}select:active{transform:scale(0.98)}select:disabled{cursor:default;opacity:0.42}.ctrl-group:has(select:disabled) label{opacity:0.55}select option{background:var(--option-bg);color:var(--select-text)}@media (max-width:420px){body{padding-inline:12px}.controls{width:min(100%,360px);display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.ctrl-group{min-width:0}select{width:100%}}</style></head><body><div class="wrap"><canvas id="c" width="320" height="320"></canvas><div class="sun">☀️</div><div class="moon">🌙</div><div class="info"><div class="clock" id="clock">--:--<sup>--</sup></div><div class="date" id="date">----</div><div class="status" id="status">--</div></div></div><div class="controls"><div class="ctrl-group"><label>都市</label><select id="cityS"></select></div><div class="ctrl-group"><label>断食時間</label><select id="fastH"><option value="none">なし</option><option value="12">12h</option><option value="14">14h</option><option value="16" selected>16h</option><option value="18">18h</option><option value="20">20h</option></select></div><div class="ctrl-group"><label>食事開始</label><select id="eatS"></select></div><div class="ctrl-group"><label>強調</label><select id="focusS"><option value="fasting" selected>断食時間</option><option value="eating">食事時間</option></select></div></div><div class="sun-times" id="sunTimes"></div><script>const cv = document.getElementById('c');
+const ctx = cv.getContext('2d');
+const W = 320, H = 320, CX = W/2, CY = H/2;
+const R_OUTER = 146;
+const R_INNER = 114;
+const DEFAULTS = {
+city: 5,
+eatingStart: 12,
+};
+const PREFS = {
+city: 'fs_city',
+fastingHours: 'fs_fastH',
+eatingStart: 'fs_eatS',
+focus: 'fs_focus',
+};
+const els = {
+clock: document.getElementById('clock'),
+date: document.getElementById('date'),
+status: document.getElementById('status'),
+sunTimes: document.getElementById('sunTimes'),
+city: document.getElementById('cityS'),
+fastingHours: document.getElementById('fastH'),
+eatingStart: document.getElementById('eatS'),
+focus: document.getElementById('focusS'),
+};
+const CITIES = [
+{ label: '根室',   lat: 43.3301, lon: 145.5828, tz: 9 },
+{ label: '札幌',   lat: 43.0642, lon: 141.3469, tz: 9 },
+{ label: '青森',   lat: 40.8221, lon: 140.7474, tz: 9 },
+{ label: '仙台',   lat: 38.2682, lon: 140.8694, tz: 9 },
+{ label: '新潟',   lat: 37.9162, lon: 139.0364, tz: 9 },
+{ label: '東京',   lat: 35.6895, lon: 139.6917, tz: 9 },
+{ label: '金沢',   lat: 36.5613, lon: 136.6562, tz: 9 },
+{ label: '名古屋', lat: 35.1815, lon: 136.9066, tz: 9 },
+{ label: '大阪',   lat: 34.6937, lon: 135.5023, tz: 9 },
+{ label: '広島',   lat: 34.3853, lon: 132.4553, tz: 9 },
+{ label: '高知',   lat: 33.5597, lon: 133.5311, tz: 9 },
+{ label: '福岡',   lat: 33.5904, lon: 130.4017, tz: 9 },
+{ label: '鹿児島', lat: 31.5966, lon: 130.5571, tz: 9 },
+{ label: '那覇',   lat: 26.2124, lon: 127.6809, tz: 9 },
+{ label: '石垣',   lat: 24.3407, lon: 124.1556, tz: 9 },
+];
+function getCity() {
+const idx = parseInt(els.city.value || DEFAULTS.city, 10);
+return CITIES[Math.min(Math.max(idx, 0), CITIES.length-1)];
+}
+function toRad(d) { return d * Math.PI / 180; }
+function toDeg(r) { return r * 180 / Math.PI; }
+function calcSunTimes(date, lat, lon, tz) {
+const rad = toRad;
+const Y = date.getUTCFullYear();
+const M = date.getUTCMonth() + 1;
+const D = date.getUTCDate();
+const JD = 367*Y - Math.floor(7*(Y+Math.floor((M+9)/12))/4)
++ Math.floor(275*M/9) + D + 1721013.5;
+function sunPos(jd) {
+const n = jd - 2451545.0;
+const L = (280.460 + 0.9856474 * n) % 360;
+const g = rad((357.528 + 0.9856003 * n) % 360);
+const lambda = rad(L + 1.915 * Math.sin(g) + 0.020 * Math.sin(2*g));
+const eps = rad(23.439 - 0.0000004 * n);
+const sinDec = Math.sin(eps) * Math.sin(lambda);
+const dec = Math.asin(sinDec);
+const RA  = Math.atan2(Math.cos(eps)*Math.sin(lambda), Math.cos(lambda));
+const Lrad = rad(L);
+const eot = (-1.915*Math.sin(g) - 0.020*Math.sin(2*g)
++ 2.466*Math.sin(2*Lrad) - 0.053*Math.sin(4*Lrad)) / 60;
+return { dec, eot };
+}
+const { dec, eot } = sunPos(JD);
+const cosH = (Math.cos(rad(90.833)) - Math.sin(rad(lat))*Math.sin(dec))
+/ (Math.cos(rad(lat)) * Math.cos(dec));
+if (cosH > 1)  return { rise: 0,  set: 0  };
+if (cosH < -1) return { rise: 0,  set: 24 };
+const H0 = toDeg(Math.acos(cosH)) / 15;
+const transit = 12 - eot - lon/15 + tz;
+return {
+rise: transit - H0,
+set:  transit + H0,
+};
+}
+function toAngle(h) {
+return ((h - 12) / 24) * Math.PI * 2 - Math.PI / 2;
+}
+function hmsToH(h, m, s) { return h + m/60 + s/3600; }
+function lerpColor(c1, c2, t) {
+return {
+r: Math.round(c1.r + (c2.r - c1.r) * t),
+g: Math.round(c1.g + (c2.g - c1.g) * t),
+b: Math.round(c1.b + (c2.b - c1.b) * t),
+};
+}
+function hex(h) {
+return {
+r: parseInt(h.slice(0,2),16),
+g: parseInt(h.slice(2,4),16),
+b: parseInt(h.slice(4,6),16)
+};
+}
+function cssVar(name) {
+return getComputedStyle(document.body).getPropertyValue(name).trim();
+}
+function cssHex(name) {
+return hex(cssVar(name).replace('#', ''));
+}
+function drawColorArc(r, a1, a2, c1, c2, coreW, trackW) {
+let end = a2;
+while (end <= a1) end += Math.PI * 2;
+const steps = 80;
+const trackAlpha = Number(cssVar('--arc-track-alpha'));
+ctx.lineCap = 'round';
+for (let i = 0; i < steps; i++) {
+const t1 = i/steps, t2 = (i+1)/steps;
+const aa = a1 + (end-a1)*t1;
+const ab = a1 + (end-a1)*t2;
+const col = lerpColor(c1, c2, (t1+t2)/2);
+const cs = `rgb(${col.r},${col.g},${col.b})`;
+ctx.beginPath(); ctx.arc(CX, CY, r, aa, ab);
+ctx.strokeStyle = `rgba(${col.r},${col.g},${col.b},${trackAlpha})`;
+ctx.lineWidth = trackW; ctx.stroke();
+ctx.beginPath(); ctx.arc(CX, CY, r, aa, ab);
+ctx.strokeStyle = cs; ctx.lineWidth = coreW;
+ctx.stroke();
+}
+}
+function drawSundialRing(nowH, rise, set) {
+ctx.beginPath(); ctx.arc(CX, CY, R_OUTER, 0, Math.PI*2);
+ctx.strokeStyle = cssVar('--ring'); ctx.lineWidth = 2.5;
+ctx.stroke();
+drawColorArc(R_OUTER, toAngle(set), toAngle(rise + 24), cssHex('--moon'), cssHex('--moon-end'), 3, 9);
+drawColorArc(R_OUTER, toAngle(rise), toAngle(set), cssHex('--sun'), cssHex('--sun-end'), 3, 9);
+const a = toAngle(nowH);
+const x = CX + R_OUTER * Math.cos(a);
+const y = CY + R_OUTER * Math.sin(a);
+ctx.beginPath(); ctx.arc(x, y, 5.5, 0, Math.PI*2);
+ctx.fillStyle = cssVar('--dot');
+ctx.fill();
+}
+function drawSoftArc(r, a1, a2, color, width) {
+let end = a2;
+while (end <= a1) end += Math.PI * 2;
+ctx.beginPath(); ctx.arc(CX, CY, r, a1, end);
+ctx.strokeStyle = color;
+ctx.lineWidth = width;
+ctx.lineCap = 'round';
+ctx.stroke();
+}
+function drawFastingArc(eatSH, fastH, focusMode) {
+const eatEH = eatSH + (24 - fastH);
+const eatStartA = toAngle(eatSH);
+const eatEndA = toAngle(eatEH);
+const fastingStartA = toAngle(eatEH);
+const fastingEndA = toAngle(eatSH + 24);
+if (focusMode === 'eating') {
+drawSoftArc(R_INNER, fastingStartA, fastingEndA, cssVar('--fasting-soft'), 5);
+drawColorArc(R_INNER, eatStartA, eatEndA, cssHex('--eating'), cssHex('--eating-end'), 5, 16);
+return;
+}
+drawSoftArc(R_INNER, eatStartA, eatEndA, cssVar('--eating-soft'), 5);
+drawColorArc(R_INNER, fastingStartA, fastingEndA, cssHex('--fasting'), cssHex('--fasting-end'), 5, 16);
+}
+function normHour(h) {
+return ((h % 24) + 24) % 24;
+}
+function fmt(h) {
+const totalMin = Math.round(normHour(h) * 60) % (24 * 60);
+const hh = Math.floor(totalMin / 60);
+const mm = totalMin % 60;
+return `${hh.toString().padStart(2,'0')}:${mm.toString().padStart(2,'0')}`;
+}
+function fmtDate(date) {
+const year = date.getUTCFullYear();
+const month = date.getUTCMonth() + 1;
+const day = date.getUTCDate();
+const weekdays = ['日', '月', '火', '水', '木', '金', '土'];
+return `令和${year - 2018}年 ${month}/${day} ${weekdays[date.getUTCDay()]}`;
+}
+function isWithinClockWindow(nowH, startH, endH) {
+const now = normHour(nowH);
+const start = normHour(startH);
+const end = normHour(endH);
+if (start === end) return true;
+if (start < end) return now >= start && now < end;
+return now >= start || now < end;
+}
+function cityLocalDateFromUTC(utcDate, tz) {
+return new Date(utcDate.getTime() + tz * 3600000);
+}
+let cachedDate = null;
+let cachedRise = 6;
+let cachedSet  = 18;
+function getSunTimes(date, city) {
+const key = `${date.getUTCFullYear()}-${date.getUTCMonth()}-${date.getUTCDate()}-${city.label}`;
+if (cachedDate !== key) {
+cachedDate = key;
+const t = calcSunTimes(date, city.lat, city.lon, city.tz);
+cachedRise = t.rise;
+cachedSet  = t.set;
+}
+return { rise: cachedRise, set: cachedSet };
+}
+function tick() {
+const nowUTC = new Date();
+const city   = getCity();
+const local = cityLocalDateFromUTC(nowUTC, city.tz);
+const hh = local.getUTCHours(), mm = local.getUTCMinutes(), ss = local.getUTCSeconds();
+const hasFastingWindow = els.fastingHours.value !== 'none';
+syncFastingControls(hasFastingWindow);
+const fastH = hasFastingWindow ? parseInt(els.fastingHours.value, 10) : 0;
+const eatSH = parseInt(els.eatingStart.value, 10);
+const focusMode = els.focus.value;
+const eatEH = eatSH + (24 - fastH);
+const nowH  = hmsToH(hh, mm, ss);
+const inEat = hasFastingWindow && isWithinClockWindow(nowH, eatSH, eatEH);
+const { rise, set } = getSunTimes(local, city);
+applySunTheme(nowH, rise, set);
+els.clock.innerHTML =
+`${hh.toString().padStart(2,'0')}:${mm.toString().padStart(2,'0')}<sup>${ss.toString().padStart(2,'0')}</sup>`;
+els.date.textContent = fmtDate(local);
+if (hasFastingWindow) {
+els.status.textContent = inEat ? '食事中' : '断食中';
+els.status.className = 'status ' + (inEat ? 'eating' : 'fasting');
+} else {
+els.status.textContent = '';
+els.status.className = 'status hidden';
+}
+els.sunTimes.textContent = `${city.label}  ☀ ${fmt(rise)}  ↓ ${fmt(set)}`;
+ctx.clearRect(0, 0, W, H);
+ctx.lineCap = 'round';
+if (hasFastingWindow) {
+drawFastingArc(eatSH, fastH, focusMode);
+}
+drawSundialRing(nowH, rise, set);
+}
+function syncFastingControls(hasFastingWindow = els.fastingHours.value !== 'none') {
+els.eatingStart.disabled = !hasFastingWindow;
+els.focus.disabled = !hasFastingWindow;
+}
+function appendOption(select, value, label, selected = false) {
+const opt = document.createElement('option');
+opt.value = value;
+opt.textContent = label;
+opt.selected = selected;
+select.appendChild(opt);
+}
+function buildCitySelect() {
+const savedRaw = parseInt(localStorage.getItem(PREFS.city) || DEFAULTS.city, 10);
+const saved = Math.min(Math.max(Number.isFinite(savedRaw) ? savedRaw : DEFAULTS.city, 0), CITIES.length - 1);
+CITIES.forEach((city, i) => appendOption(els.city, i, city.label, i === saved));
+}
+function buildEatingStartSelect() {
+for (let hour = 0; hour < 24; hour++) {
+appendOption(els.eatingStart, hour, `${hour}:00`, hour === DEFAULTS.eatingStart);
+}
+}
+function savePrefs() {
+localStorage.setItem(PREFS.fastingHours, els.fastingHours.value);
+localStorage.setItem(PREFS.eatingStart, els.eatingStart.value);
+localStorage.setItem(PREFS.city, els.city.value);
+localStorage.setItem(PREFS.focus, els.focus.value);
+}
+function applySunTheme(nowH, rise, set) {
+const isDaylight = isWithinClockWindow(nowH, rise, set);
+document.body.classList.toggle('light', isDaylight);
+}
+function loadPrefs() {
+const fh = localStorage.getItem(PREFS.fastingHours);
+const es = localStorage.getItem(PREFS.eatingStart);
+const focus = localStorage.getItem(PREFS.focus);
+if (fh) els.fastingHours.value = fh;
+if (es) els.eatingStart.value = es;
+if (focus) els.focus.value = focus;
+}
+function onSettingChange(element, handler = tick) {
+element.addEventListener('change', () => {
+savePrefs();
+handler();
+});
+}
+let wakeLock = null;
+async function requestWakeLock() {
+if (!('wakeLock' in navigator) || document.visibilityState !== 'visible') return;
+try {
+wakeLock = await navigator.wakeLock.request('screen');
+wakeLock.addEventListener('release', () => {
+wakeLock = null;
+});
+} catch (_) {
+wakeLock = null;
+}
+}
+function setupWakeLock() {
+requestWakeLock();
+document.addEventListener('visibilitychange', () => {
+if (document.visibilityState === 'visible') {
+requestWakeLock();
+}
+});
+}
+function preventUserZoom() {
+document.addEventListener('gesturestart', event => event.preventDefault());
+document.addEventListener('gesturechange', event => event.preventDefault());
+document.addEventListener('gestureend', event => event.preventDefault());
+document.addEventListener('dblclick', event => event.preventDefault(), { passive: false });
+}
+buildCitySelect();
+buildEatingStartSelect();
+loadPrefs();
+tick();
+setupWakeLock();
+preventUserZoom();
+setInterval(tick, 1000);
+onSettingChange(els.fastingHours);
+onSettingChange(els.eatingStart);
+onSettingChange(els.focus);
+onSettingChange(els.city, () => {
+cachedDate = null;
+tick();
+});</script></body></html>
