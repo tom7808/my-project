@@ -270,10 +270,15 @@
     body {
       flex-direction: row;
       justify-content: center;
+      align-items: flex-start;
       gap: 28px;
       min-height: var(--app-height);
       height: var(--app-height);
-      padding: 16px 18px;
+      padding:
+        max(28px, env(safe-area-inset-top))
+        max(18px, env(safe-area-inset-right))
+        max(10px, env(safe-area-inset-bottom))
+        max(18px, env(safe-area-inset-left));
     }
     .wrap {
       width: clamp(240px, calc(100svh - 56px), 320px);
@@ -306,6 +311,7 @@
       width: min(330px, calc(100vw - 280px));
       flex: 0 1 330px;
       align-items: stretch;
+      margin-top: clamp(72px, 15svh, 118px);
     }
     .controls {
       width: 100%;
@@ -332,7 +338,7 @@
   @media (orientation: landscape) and (max-height: 360px) {
     body {
       gap: 14px;
-      padding-block: 10px;
+      padding-block: max(24px, env(safe-area-inset-top)) max(8px, env(safe-area-inset-bottom));
     }
     .wrap {
       width: clamp(220px, calc(100svh - 72px), 250px);
@@ -340,6 +346,7 @@
     }
     .panel {
       width: min(300px, calc(100vw - 302px));
+      margin-top: clamp(52px, 13svh, 72px);
     }
     .controls {
       gap: 8px;
