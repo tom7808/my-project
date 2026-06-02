@@ -181,6 +181,17 @@
     color: var(--tertiary); letter-spacing: 0.12em;
     text-align: center;
   }
+  .updated-at {
+    position: fixed;
+    right: 8px;
+    bottom: 6px;
+    font-size: 8px;
+    font-weight: 400;
+    color: var(--text);
+    opacity: 0.16;
+    letter-spacing: 0.04em;
+    pointer-events: none;
+  }
 
   .panel {
     display: flex;
@@ -389,6 +400,8 @@
   </div>
   <div class="sun-times" id="sunTimes"></div>
 </div>
+
+<div class="updated-at">更新: 2026-06-03 02:20 JST</div>
 
 <script>
 const cv = document.getElementById('c');
