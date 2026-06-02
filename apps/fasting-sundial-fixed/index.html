@@ -35,6 +35,7 @@
     --eating-soft: rgba(64,200,184,0.18);
     --arc-track-alpha: 0.20;
   }
+  :root.light,
   body.light {
     --bg: #f5f5f7;
     --text: #1d1d1f;
@@ -64,6 +65,7 @@
     --eating-soft: rgba(0,140,122,0.14);
     --arc-track-alpha: 0.14;
   }
+  :root.dawn,
   body.dawn {
     --bg:
       radial-gradient(circle at 50% 12%, rgba(255,214,138,0.34), transparent 28%),
@@ -85,6 +87,7 @@
     --dot: #fffdf8;
     --arc-track-alpha: 0.22;
   }
+  :root.dusk,
   body.dusk {
     --bg:
       radial-gradient(circle at 50% 84%, rgba(255,137,84,0.32), transparent 30%),
@@ -107,7 +110,10 @@
     --arc-track-alpha: 0.22;
   }
   html {
-    height: 100%;
+    min-height: 100%;
+    background: var(--bg);
+    overflow: hidden;
+    transition: background 900ms ease;
   }
   body {
     --app-height: 100dvh;
@@ -275,7 +281,7 @@
       min-height: var(--app-height);
       height: var(--app-height);
       padding:
-        max(28px, env(safe-area-inset-top))
+        max(24px, env(safe-area-inset-top))
         max(18px, env(safe-area-inset-right))
         max(10px, env(safe-area-inset-bottom))
         max(18px, env(safe-area-inset-left));
@@ -338,7 +344,7 @@
   @media (orientation: landscape) and (max-height: 360px) {
     body {
       gap: 14px;
-      padding-block: max(24px, env(safe-area-inset-top)) max(8px, env(safe-area-inset-bottom));
+      padding-block: max(20px, env(safe-area-inset-top)) max(8px, env(safe-area-inset-bottom));
     }
     .wrap {
       width: clamp(220px, calc(100svh - 72px), 250px);
@@ -792,18 +798,22 @@ function savePrefs() {
 function applySunTheme(nowH, rise, set) {
   const previewTheme = new URLSearchParams(location.search).get('preview');
   if (previewTheme === 'dawn' || previewTheme === 'dusk') {
-    document.body.classList.toggle('light', false);
-    document.body.classList.toggle('dawn', previewTheme === 'dawn');
-    document.body.classList.toggle('dusk', previewTheme === 'dusk');
+    setThemeClasses(false, previewTheme === 'dawn', previewTheme === 'dusk');
     return;
   }
 
   const isDaylight = isWithinClockWindow(nowH, rise, set);
   const isDawn = isNearHour(nowH, rise);
   const isDusk = isNearHour(nowH, set);
-  document.body.classList.toggle('light', isDaylight);
-  document.body.classList.toggle('dawn', isDawn && !isDusk);
-  document.body.classList.toggle('dusk', isDusk);
+  setThemeClasses(isDaylight, isDawn && !isDusk, isDusk);
+}
+
+function setThemeClasses(isLight, isDawn, isDusk) {
+  [document.documentElement, document.body].forEach(element => {
+    element.classList.toggle('light', isLight);
+    element.classList.toggle('dawn', isDawn);
+    element.classList.toggle('dusk', isDusk);
+  });
 }
 function loadPrefs() {
   const fh = localStorage.getItem(PREFS.fastingHours);
@@ -941,8 +951,8 @@ function preventUserZoom() {
 
 function updateAppHeight() {
   const viewport = window.visualViewport;
-  const height = viewport ? viewport.height : window.innerHeight;
-  document.body.style.setProperty('--app-height', `${height}px`);
+  const height = viewport ? viewport.height + viewport.offsetTop : window.innerHeight;
+  document.body.style.setProperty('--app-height', `${Math.ceil(height)}px`);
 }
 
 function scheduleViewportSizingRefresh() {
